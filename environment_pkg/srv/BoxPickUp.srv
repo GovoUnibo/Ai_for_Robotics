@@ -1,0 +1,5 @@
+bool action
+----
+bool success
+
+#se la scatola soddisfa condizioni di reachability, allora la scatola viene presa -> ritrona success true

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <arg name="world"  default="$(find environment_pkg)/worlds/tiago_house.world"/>  <!-- empty, small_office, ... (see ../worlds) -->
+  <arg name="gui" default="true"/>
+  <arg name="debug" default="false"/>
+  <arg name="recording" default="false"/>
+  <arg name="extra_gazebo_args" default=""/>
+  <arg name="extra_gz_model_path" default=""/>
+  <arg name="extra_gz_resource_path" default=""/>
+  <arg name="paused" default="false"/>
+
+  <arg name="path_to_ws" default="TO_CHANGE_AS_ARG" doc="ws folder need to be included in the path to find the models"/>
+  <!-- set env variables -->
+
+  <env name="GAZEBO_MODEL_PATH" value="$(arg extra_gz_model_path):$(find pal_gazebo_worlds)/../pal_gazebo_worlds_private/models:$(find environment_pkg):$(find pal_gazebo_worlds)/models:$(optenv GAZEBO_MODEL_PATH)"/>
+  <env name="GAZEBO_RESOURCE_PATH" value="$(arg extra_gz_resource_path):$(find pal_gazebo_worlds)/../pal_gazebo_worlds_private:$(find environment_pkg):$(find pal_gazebo_worlds):$(optenv GAZEBO_RESOURCE_PATH)"/>
+  
+  <env name="GAZEBO_RESOURCE_PATH" value="$(arg path_to_ws)/src/environment_pkg/models"/>
+  
+  <!-- start up world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <!-- world_name is relative to directories in GAZEBO_RESOURCE_PATH-->
+    <arg name="world_name" value="$(arg world)"/>
+    <arg name="extra_gazebo_args" value="$(arg extra_gazebo_args)"/>
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="debug" value="$(arg debug)"/>
+    <arg name="recording" value="$(arg recording)"/>
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="verbose" value="false"/>
+  </include>
+
+  <!-- <node name="newframe2world" pkg="tf" type="static_transform_publisher" args="0.1 0 1.15 0 0 0 base_link box_placement 50"/> -->
+  
+</launch>

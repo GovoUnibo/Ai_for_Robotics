@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+
+    <!-- #CHANGE this -->
+    <arg name="path_to_ws" default="/home/andrea/tiago_public_ws" doc="ws folder need to be included in the path to find the models"/>
+
+
+    
+    <!-- <arg name="gzpose" default="-x -0.25 -y -1.5 -z 0.0 -R 0.0 -P 0.0 -Y 0.0"/> -->
+    <arg name="gzpose" default="-x 3 -y -0 -z 0.0 -R 0.0 -P 0.0 -Y 0.0"/>
+    <arg name="public_sim" default="true"/>
+    
+
+    <arg name="tiago_ee" default="pal-gripper" doc ="Choose between: pal-gripper,pal-hey5, robotiq-2f-85 "/>
+    
+
+ 
+
+
+    <!-- spawn robot in simulation -->
+    <arg name="namespace" default="/"/>    
+    <include file="$(find environment_pkg)/launch/tiago.launch" ns="$(arg namespace)">
+        <arg name="ft_sensor" value="false"/>
+        <arg name="gzpose" value="$(arg gzpose)"/>
+        <arg name="public_sim" value="$(arg public_sim)"/>
+        <arg name="end_effector" value="$(arg tiago_ee)"/>
+    </include>
+
+    <arg name="rviz"     default="false"/>
+
+    <arg name="sim_sufix" value="_public_sim"     if="$(arg public_sim)"/>
+    <arg name="sim_sufix" value=""                unless="$(arg public_sim)"/>
+
+    <node name="rviz" pkg="rviz" type="rviz" if="$(arg rviz)" args="-d $(find tiago_2dnav)/config/rviz/navigation$(arg sim_sufix).rviz"/>
+    
+   <!-- start up world -->
+    <include file="$(find environment_pkg)/launch/tiago_house.launch">
+        <arg name="path_to_ws" value="$(arg path_to_ws)"/>
+        <arg name="gui" value="true"/>
+    </include>
+
+</launch>

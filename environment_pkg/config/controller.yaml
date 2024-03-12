@@ -1,0 +1,23 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 50  # Hz
+    use_sim_time: true
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    joint_group_pos_controller:
+      type: position_controllers/JointGroupPositionController
+
+    joint_trajectory_position_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+
+joint_group_pos_controller:
+  ros__parameters:
+    joints:
+      - door_1_joint
+      - door_2_joint
+      - door_3_joint
+      - door_4_joint
+    # interface_name: position
