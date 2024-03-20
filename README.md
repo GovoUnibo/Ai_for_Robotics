@@ -1,5 +1,5 @@
 # Ai_for_Robotics
-- git clone --recurse-submodules <url>
+- git clone --recurse-submodules _<url>_
 ## Modify file launch
  -  modify argument inside the file "/home/path_to_ws/src/environment_pkg/launch/simulate_tiago.launch"
    <arg name="path_to_ws" default="/path_to_your_ws"/> -> with path to your ws
