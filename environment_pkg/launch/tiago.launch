@@ -26,7 +26,7 @@
 
 
   <!-- spawn robot in simulation -->
-  <include file="$(find tiago_gazebo)/launch/tiago_spawn.launch">
+  <include file="$(find environment_pkg)/launch/tiago_spawn.launch">
     <arg name="arm" value="$(arg arm)"/>
     <arg name="end_effector" value="$(arg end_effector)"/>
     <arg name="ft_sensor" value="$(arg ft_sensor)"/>

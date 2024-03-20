@@ -19,7 +19,7 @@
   <xacro:arg name="y" default="0"/>
   <xacro:arg name="yaw" default="0"/>
 
-  <xacro:include filename="$(find environment_pkg)/urdf/tiago/base.urdf.xacro"/>
+  <xacro:include filename="$(find environment_pkg)/urdf/base.urdf.xacro"/>
 
   <xacro:include filename="$(find pmb2_description)/urdf/sensors/hokuyo_urg_04lx_ug01_laser.urdf.xacro"/>
   <xacro:include filename="$(find pmb2_description)/urdf/sensors/sick_tim551_laser.urdf.xacro"/>
