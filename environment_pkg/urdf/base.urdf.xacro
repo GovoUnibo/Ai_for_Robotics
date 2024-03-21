@@ -122,7 +122,7 @@
     <xacro:caster side="back_left"   radius="${caster_radius}" width="${caster_width}" separation_x="${-caster_separation_x}" separation_y="${-caster_separation_y}" offset_x="${caster_offset_x}" offset_y="${caster_offset_y}" offset_z="${caster_offset_z}" parent="${name}"/>
 
     <!--Sonar base-->
-    <xacro:sonar_sensor name="${name}_sonar1" parent="${name}_link" ros_topic="${name}_sonar1" update_rate="10.0" min_range="0.2" max_range="3.5" field_of_view="0.785398" ray_count="5">
+    <!-- <xacro:sonar_sensor name="${name}_sonar1" parent="${name}_link" ros_topic="${name}_sonar1" update_rate="10.0" min_range="0.2" max_range="3.5" field_of_view="0.785398" ray_count="5">
       <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
     </xacro:sonar_sensor>
 
@@ -132,7 +132,7 @@
 
     <xacro:sonar_sensor name="${name}_sonar3" parent="${name}_link" ros_topic="${name}_sonar3" update_rate="10.0" min_range="0.2" max_range="3.5" field_of_view="0.785398" ray_count="5">
       <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
-    </xacro:sonar_sensor>
+    </xacro:sonar_sensor> -->
 
   </xacro:macro>
 
