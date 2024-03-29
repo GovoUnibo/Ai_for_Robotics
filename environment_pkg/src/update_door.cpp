@@ -66,18 +66,13 @@ namespace gazebo
             this->initial_ang_x = pose.Rot().Euler().X();
             this->initial_ang_y = pose.Rot().Euler().Y();
             this->initial_ang_z = pose.Rot().Euler().Z();
-            
-            this->model->SetInitialRelativePose(ignition::math::Pose3d(this->initial_pos_x , 
-                                this->initial_pos_y , 
-                                this->initial_pos_z + this->open_quantity , 
-                                this->initial_ang_x , 
-                                this->initial_ang_y , 
-                                this->initial_ang_z));
+            this->open_quantity = 1.7;
+
         }
 
         void OnUpdate(){
             if (this->model->GetName() == "Door3")
-                this->model->SetRelativePose(ignition::math::Pose3d(this->initial_pos_x + this->open_quantity, this->initial_pos_y  , this->initial_pos_z , this->initial_ang_x , this->initial_ang_y , this->initial_ang_z));
+                this->model->SetRelativePose(ignition::math::Pose3d(this->initial_pos_x , this->initial_pos_y  , this->initial_pos_z , this->initial_ang_x , this->initial_ang_y , this->initial_ang_z + this->open_quantity));
             else
                 this->model->SetRelativePose(ignition::math::Pose3d(this->initial_pos_x , this->initial_pos_y +this->open_quantity , this->initial_pos_z , this->initial_ang_x , this->initial_ang_y , this->initial_ang_z));
         }
@@ -100,7 +95,7 @@ namespace gazebo
             cout << "Requested " << this-> service_name << " to open" << req.open << endl;
             this->is_open = req.open;
             if (req.open)
-                this->open_quantity = 1.5;
+                this->open_quantity = 1.7;
             else
                 this->open_quantity = 0;
             res.done = true;

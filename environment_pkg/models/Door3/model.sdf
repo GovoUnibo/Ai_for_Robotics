@@ -24,7 +24,7 @@
         <geometry>
           <mesh>
             <uri>model://Door3/mesh/door.stl</uri>
-            <scale>2 2 3</scale>
+            <scale>5 2 3</scale>
           </mesh>
         </geometry>
         <material>
@@ -51,7 +51,7 @@
         <geometry>
           <mesh>
             <uri>model://Door3/mesh/door.stl</uri>
-            <scale>2 2 3</scale>
+            <scale>5 2 3</scale>
           </mesh>
         </geometry>
         <surface>
