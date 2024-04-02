@@ -106,49 +106,44 @@
 
     <xacro:if value="${sonars}">
 
+
       <!-- Sonars -->
-      <xacro:range_sensor name="${name}_sonar_01" parent="${name}" ros_topic="sonar4_${name}" update_rate="1" maxRange="3.0" minRange="0.02" fov="0.5" radiation="ultrasound">
-        <origin xyz="${0.259*cos(0*deg_to_rad)} ${0.259*sin(0*deg_to_rad)}  0.173" rpy="0 0 ${0*deg_to_rad}"/>
+      <xacro:range_sensor name="${name}_sonar_01" parent="${name}" ros_topic="sonar01_${name}" update_rate="1" maxRange="3.0" minRange="0.02" fov="0.5" radiation="ultrasound">
+        <origin xyz="${0.260*cos(0*deg_to_rad)} ${0.260*sin(0*deg_to_rad)}  0.173" rpy="0 -0.2 ${0*deg_to_rad}"/>
       </xacro:range_sensor>
-      <xacro:range_sensor name="${name}_sonar_02" parent="${name}" ros_topic="sonar4_${name}" update_rate="1" maxRange="3.0" minRange="0.02" fov="0.5" radiation="ultrasound">
-        <origin xyz="${0.259*cos(30*deg_to_rad)} ${0.259*sin(30*deg_to_rad)}  0.173" rpy="0 0 ${30*deg_to_rad}"/>
+      <xacro:range_sensor name="${name}_sonar_02" parent="${name}" ros_topic="sonar02_${name}" update_rate="1" maxRange="3.0" minRange="0.02" fov="0.5" radiation="ultrasound">
+        <origin xyz="${0.260*cos(30*deg_to_rad)} ${0.260*sin(30*deg_to_rad)}  0.173" rpy="0 -0.2 ${30*deg_to_rad}"/>
       </xacro:range_sensor>
-      <xacro:range_sensor name="${name}_sonar_03" parent="${name}" ros_topic="sonar4_${name}" update_rate="1" maxRange="3.0" minRange="0.02" fov="0.5" radiation="ultrasound">
-        <origin xyz="${0.259*cos(60*deg_to_rad)} ${0.259*sin(60*deg_to_rad)}  0.173" rpy="0 0 ${60*deg_to_rad}"/>
+      <xacro:range_sensor name="${name}_sonar_03" parent="${name}" ros_topic="sonar03_${name}" update_rate="1" maxRange="3.0" minRange="0.02" fov="0.5" radiation="ultrasound">
+        <origin xyz="${0.260*cos(60*deg_to_rad)} ${0.260*sin(60*deg_to_rad)}  0.173" rpy="0 -0.2 ${60*deg_to_rad}"/>
       </xacro:range_sensor>
-      <xacro:range_sensor name="${name}_sonar_04" parent="${name}" ros_topic="sonar4_${name}" update_rate="1" maxRange="3.0" minRange="0.02" fov="0.5" radiation="ultrasound">
-        <origin xyz="${0.259*cos(90*deg_to_rad)} ${0.259*sin(90*deg_to_rad)}  0.173" rpy="0 0 ${90*deg_to_rad}"/>
+      <xacro:range_sensor name="${name}_sonar_04" parent="${name}" ros_topic="sonar04_${name}" update_rate="1" maxRange="3.0" minRange="0.02" fov="0.5" radiation="ultrasound">
+        <origin xyz="${0.260*cos(90*deg_to_rad)} ${0.260*sin(90*deg_to_rad)}  0.173" rpy="0 -0.2 ${90*deg_to_rad}"/>
       </xacro:range_sensor>
-      <xacro:range_sensor name="${name}_sonar_05" parent="${name}" ros_topic="sonar4_${name}" update_rate="1" maxRange="3.0" minRange="0.02" fov="0.5" radiation="ultrasound">
-        <origin xyz="${0.259*cos(120*deg_to_rad)} ${0.259*sin(120*deg_to_rad)}  0.173" rpy="0 0 ${120*deg_to_rad}"/>
+      <xacro:range_sensor name="${name}_sonar_05" parent="${name}" ros_topic="sonar05_${name}" update_rate="1" maxRange="3.0" minRange="0.02" fov="0.5" radiation="ultrasound">
+        <origin xyz="${0.260*cos(120*deg_to_rad)} ${0.260*sin(120*deg_to_rad)}  0.173" rpy="0 -0.2 ${120*deg_to_rad}"/>
       </xacro:range_sensor>
-      <xacro:range_sensor name="${name}_sonar_06" parent="${name}" ros_topic="sonar4_${name}" update_rate="1" maxRange="3.0" minRange="0.02" fov="0.5" radiation="ultrasound">
-        <origin xyz="${0.259*cos(150*deg_to_rad)} ${0.259*sin(150*deg_to_rad)}  0.173" rpy="0 0 ${150*deg_to_rad}"/>
+      <xacro:range_sensor name="${name}_sonar_06" parent="${name}" ros_topic="sonar06_${name}" update_rate="1" maxRange="3.0" minRange="0.02" fov="0.5" radiation="ultrasound">
+        <origin xyz="${0.260*cos(150*deg_to_rad)} ${0.260*sin(150*deg_to_rad)}  0.173" rpy="0 -0.2 ${150*deg_to_rad}"/>
       </xacro:range_sensor>
-      <xacro:range_sensor name="${name}_sonar_07" parent="${name}" ros_topic="sonar4_${name}" update_rate="1" maxRange="3.0" minRange="0.02" fov="0.5" radiation="ultrasound">
-        <origin xyz="${0.259*cos(180*deg_to_rad)} ${0.259*sin(180*deg_to_rad)}  0.173" rpy="0 0 ${180*deg_to_rad}"/>
+      <xacro:range_sensor name="${name}_sonar_07" parent="${name}" ros_topic="sonar07_${name}" update_rate="1" maxRange="3.0" minRange="0.02" fov="0.5" radiation="ultrasound">
+        <origin xyz="${0.260*cos(180*deg_to_rad)} ${0.260*sin(180*deg_to_rad)}  0.173" rpy="0 -0.2 ${180*deg_to_rad}"/>
       </xacro:range_sensor>
-      <xacro:range_sensor name="${name}_sonar_08" parent="${name}" ros_topic="sonar4_${name}" update_rate="1" maxRange="3.0" minRange="0.02" fov="0.5" radiation="ultrasound">
-        <origin xyz="${0.259*cos(210*deg_to_rad)} ${0.259*sin(210*deg_to_rad)}  0.173" rpy="0 0 ${210*deg_to_rad}"/>
+      <xacro:range_sensor name="${name}_sonar_08" parent="${name}" ros_topic="sonar08_${name}" update_rate="1" maxRange="3.0" minRange="0.02" fov="0.5" radiation="ultrasound">
+        <origin xyz="${0.260*cos(210*deg_to_rad)} ${0.260*sin(210*deg_to_rad)}  0.173" rpy="0 -0.2 ${210*deg_to_rad}"/>
       </xacro:range_sensor>
-      <xacro:range_sensor name="${name}_sonar_09" parent="${name}" ros_topic="sonar4_${name}" update_rate="1" maxRange="3.0" minRange="0.02" fov="0.5" radiation="ultrasound">
-        <origin xyz="${0.259*cos(240*deg_to_rad)} ${0.259*sin(240*deg_to_rad)}  0.173" rpy="0 0 ${240*deg_to_rad}"/>
+      <xacro:range_sensor name="${name}_sonar_09" parent="${name}" ros_topic="sonar09_${name}" update_rate="1" maxRange="3.0" minRange="0.02" fov="0.5" radiation="ultrasound">
+        <origin xyz="${0.260*cos(240*deg_to_rad)} ${0.260*sin(240*deg_to_rad)}  0.173" rpy="0 -0.2 ${240*deg_to_rad}"/>
       </xacro:range_sensor>
-      <xacro:range_sensor name="${name}_sonar_10" parent="${name}" ros_topic="sonar4_${name}" update_rate="1" maxRange="3.0" minRange="0.02" fov="0.5" radiation="ultrasound">
-        <origin xyz="${0.259*cos(270*deg_to_rad)} ${0.259*sin(270*deg_to_rad)}  0.173" rpy="0 0 ${270*deg_to_rad}"/>
+      <xacro:range_sensor name="${name}_sonar_10" parent="${name}" ros_topic="sonar10_${name}" update_rate="1" maxRange="3.0" minRange="0.02" fov="0.5" radiation="ultrasound">
+        <origin xyz="${0.260*cos(270*deg_to_rad)} ${0.260*sin(270*deg_to_rad)}  0.173" rpy="0 -0.2 ${270*deg_to_rad}"/>
       </xacro:range_sensor>
-      <xacro:range_sensor name="${name}_sonar_11" parent="${name}" ros_topic="sonar4_${name}" update_rate="1" maxRange="3.0" minRange="0.02" fov="0.5" radiation="ultrasound">
-        <origin xyz="${0.259*cos(300*deg_to_rad)} ${0.259*sin(300*deg_to_rad)}  0.173" rpy="0 0 ${300*deg_to_rad}"/>
+      <xacro:range_sensor name="${name}_sonar_11" parent="${name}" ros_topic="sonar11_${name}" update_rate="1" maxRange="3.0" minRange="0.02" fov="0.5" radiation="ultrasound">
+        <origin xyz="${0.260*cos(300*deg_to_rad)} ${0.260*sin(300*deg_to_rad)}  0.173" rpy="0 -0.2 ${300*deg_to_rad}"/>
       </xacro:range_sensor>
-      <xacro:range_sensor name="${name}_sonar_12" parent="${name}" ros_topic="sonar4_${name}" update_rate="1" maxRange="3.0" minRange="0.02" fov="0.5" radiation="ultrasound">
-        <origin xyz="${0.259*cos(330*deg_to_rad)} ${0.259*sin(330*deg_to_rad)}  0.173" rpy="0 0 ${330*deg_to_rad}"/>
+      <xacro:range_sensor name="${name}_sonar_12" parent="${name}" ros_topic="sonar12_${name}" update_rate="1" maxRange="3.0" minRange="0.02" fov="0.5" radiation="ultrasound">
+        <origin xyz="${0.260*cos(330*deg_to_rad)} ${0.260*sin(330*deg_to_rad)}  0.173" rpy="0 -0.2 ${330*deg_to_rad}"/>
       </xacro:range_sensor>
-
-
-
-
-
-
 
     </xacro:if>
 
