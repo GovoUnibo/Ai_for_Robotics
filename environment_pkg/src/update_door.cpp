@@ -72,7 +72,7 @@ namespace gazebo
 
         void OnUpdate(){
             if (this->model->GetName() == "Door3")
-                this->model->SetRelativePose(ignition::math::Pose3d(this->initial_pos_x , this->initial_pos_y  , this->initial_pos_z , this->initial_ang_x , this->initial_ang_y , this->initial_ang_z + this->open_quantity));
+                this->model->SetRelativePose(ignition::math::Pose3d(this->initial_pos_x - this->open_quantity - 0.55 , this->initial_pos_y  , this->initial_pos_z, this->initial_ang_x , this->initial_ang_y , this->initial_ang_z ));
             else
                 this->model->SetRelativePose(ignition::math::Pose3d(this->initial_pos_x , this->initial_pos_y +this->open_quantity , this->initial_pos_z , this->initial_ang_x , this->initial_ang_y , this->initial_ang_z));
         }
