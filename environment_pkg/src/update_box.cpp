@@ -234,7 +234,7 @@ namespace gazebo
       if (this->activate){        
         auto now = std::chrono::steady_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::seconds>(now - last_update).count();
-        if (duration >= 5) {
+        if (duration >= 30) {
           // cout << duration << endl;
           last_update = now;
           VectorXd pos = this->pos_generator.get_random_pos();
