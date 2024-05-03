@@ -4,6 +4,8 @@
 #include <gazebo/common/common.hh>
 #include <ignition/math/Vector3.hh>
 #include "ros/ros.h"
+#include <chrono>
+
 #include <iostream>
 #include <string>
 #include <environment_pkg/BoxPos.h>
@@ -15,6 +17,70 @@
 // nav_msgs/Odometry
 using namespace Eigen;
 using namespace std;
+
+
+#include <iostream>
+#include <chrono>
+#include <random>
+#include <Eigen/Dense>
+
+using namespace Eigen;
+
+class TenRandomPos {
+public:
+    TenRandomPos();
+    ~TenRandomPos();
+    VectorXd get_random_pos();
+private:
+    VectorXd random_pos[10];
+    std::mt19937 gen;
+    std::uniform_real_distribution<double> dis;
+    int index=0;
+    
+};
+
+TenRandomPos::TenRandomPos() : gen(std::random_device{}()), dis(0.0, 1.0) {
+    for (int i = 0; i < 10; ++i) {
+        random_pos[i] = VectorXd(6); // Inizializzazione dei vettori con dimensione 6
+    }
+
+    random_pos[0] << 1, 0, 0.5, 0, 0, 0;
+
+    random_pos[1] << -1, 0.5, 0.5, 0, 0, 0;
+    random_pos[2] << 3, 4, 0.5, 0, 0, 0;
+    random_pos[3] << 7, 2, 0.5, 0, 0, 0;
+    random_pos[4] << 8.5, -6, 0.5, 0, 0, 0;
+    random_pos[5] << -2, -6, 0.5, 0, 0, 0;
+    random_pos[6] << -5, 7, 0.5, 0, 0, 0;
+    random_pos[7] << -5, -5, 0.5, 0, 0, 0;
+    random_pos[8] << -4, -6, 0.5, 0, 0, 0;
+    random_pos[9] << 11, -1, 0.5, 0, 0, 0;
+    
+}
+
+TenRandomPos::~TenRandomPos() {}
+
+VectorXd TenRandomPos::get_random_pos() {
+    // 20% di probabilità di ritornare una posizione casuale.
+        if (dis(gen) < 0.2) {
+            this->index = std::uniform_int_distribution<int>(0, 9)(gen);
+            return random_pos[this->index];
+        }
+    
+    // Default: ritorna una posizione casuale a caso.
+    // return random_pos[std::uniform_int_distribution<int>(0, 9)(gen)];
+    return random_pos[this->index];
+}
+
+// int main() {
+//     TenRandomPos pos_generator;
+//     for (int i = 0; i < 10; ++i) {
+//         VectorXd pos = pos_generator.get_random_pos();
+//         std::cout << "Posizione " << i + 1 << ": " << pos.transpose() << std::endl;
+//     }
+//     return 0;
+// }
+
 
 struct RPY_Angle_s {
     double roll, pitch, yaw;
@@ -124,6 +190,7 @@ namespace gazebo
       sub_ground_truth = n.subscribe("/ground_truth_odom", 1, &ModelPush::callbackGroundTruth, this);
       // print in green color PLugin started
       cout << "\033[1;32m[Plugin] Plugin Update Box started\033[0m" << endl;
+      last_update = std::chrono::steady_clock::now();
 
     }
 
@@ -163,7 +230,19 @@ namespace gazebo
 
     // Called by the world update start event
     void OnUpdate()
-    {}
+    {
+      if (this->activate){        
+        auto now = std::chrono::steady_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::seconds>(now - last_update).count();
+        if (duration >= 5) {
+          // cout << duration << endl;
+          last_update = now;
+          VectorXd pos = this->pos_generator.get_random_pos();
+          cout << "\033[1;33m[Plugin] Update Box position at : \033[0m\n" << pos.transpose() << endl;
+          this->box_model->SetWorldPose(ignition::math::Pose3d(pos(0), pos(1), pos(2), pos(3), pos(4), pos(5)));
+        }
+      }
+    }
 
 
     void callbackGroundTruth(const nav_msgs::Odometry::ConstPtr &msg)
@@ -229,7 +308,13 @@ namespace gazebo
 
     bool callbackServiceUpdatePosition(environment_pkg::BoxUpdatePos::Request &req, environment_pkg::BoxUpdatePos::Response &resp)
     {
-      this->box_model->SetWorldPose(ignition::math::Pose3d(req.x_pos, req.y_pos, req.z_pos, 0, 0, 0));
+      // this->box_model->SetWorldPose(ignition::math::Pose3d(req.x_pos, req.y_pos, req.z_pos, 0, 0, 0));
+      if (req.activate)
+      cout << "\033[1;35m[Plugin] Update Box rdm pos activated: \033[0m\n"<< endl;
+      else (!req.activate)
+        cout << "\033[1;35m[Plugin] Update Box rdm pos deactivated: \033[0m\n"<< endl;
+
+      this->activate = req.activate;
       return true;
     }
 
@@ -241,6 +326,7 @@ namespace gazebo
         ros::ServiceServer service_get_position, service_update_position;
         physics::ModelPtr box_model;
         ros::Subscriber sub_ground_truth;
+        bool activate = false;
 
     // Pointer to the update event connection
         event::ConnectionPtr updateConnection;
@@ -248,6 +334,8 @@ namespace gazebo
         float tiago_x_pos, tiago_y_pos, tiago_z_pos, tiago_rot_yaw;
         Eigen::Matrix4d T_tiago;
         Eigen::Matrix4d T_box, T_tiago_box_down, T_tiago_box_up;
+        TenRandomPos pos_generator;
+        std::chrono::steady_clock::time_point last_update;
   
   
   };

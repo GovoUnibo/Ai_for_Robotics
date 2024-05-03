@@ -95,7 +95,7 @@
     </include>
     
 
-  <model name="tiago_box">
+  <model name="box1">
     <pose>0 0 0.5 0 0 0</pose>
     <link name="link">
       <inertial>
@@ -142,6 +142,100 @@
      <plugin name="update_box" filename="libupdate_box.so"/>
   </model>
    
+  <model name="box2">
+    <pose>1 1 0.5 0 0 0</pose>
+    <link name="link">
+      <inertial>
+        <mass>0.1</mass>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>0.1 0.1 0.1</size>
+          </box>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>1000000000000000</mu>
+              <mu2>1000000000000</mu2>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+              <max_vel>0.1</max_vel>
+              <min_depth>0.002</min_depth>
+            </ode>
+          </contact>
+        </surface>
+      </collision>
+
+      <visual name="visual">
+        <geometry>
+          <box>
+            <size>0.1 0.1 0.1</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <!-- "<name>Gazebo/WoodPallet</name>" -->
+            <name>Gazebo/Red</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+
+     <plugin name="update_box" filename="libupdate_box.so"/>
+  </model>
+
+  <model name="box3">
+    <pose>2 0 0.5 0 0 0</pose>
+    <link name="link">
+      <inertial>
+        <mass>0.1</mass>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>0.1 0.1 0.1</size>
+          </box>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>1000000000000000</mu>
+              <mu2>1000000000000</mu2>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+              <max_vel>0.1</max_vel>
+              <min_depth>0.002</min_depth>
+            </ode>
+          </contact>
+        </surface>
+      </collision>
+
+      <visual name="visual">
+        <geometry>
+          <box>
+            <size>0.1 0.1 0.1</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <!-- "<name>Gazebo/WoodPallet</name>" -->
+            <name>Gazebo/Red</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+
+     <plugin name="update_box" filename="libupdate_box.so"/>
+  </model>
+
 
     <physics type="ode">
       <real_time_update_rate>1000.000000</real_time_update_rate>
