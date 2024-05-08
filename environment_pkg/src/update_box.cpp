@@ -30,7 +30,7 @@ class TenRandomPos {
 public:
     TenRandomPos();
     ~TenRandomPos();
-    VectorXd get_random_pos();
+    VectorXd get_random_pos(float);
 private:
     VectorXd random_pos[10];
     std::mt19937 gen;
@@ -60,9 +60,9 @@ TenRandomPos::TenRandomPos() : gen(std::random_device{}()), dis(0.0, 1.0) {
 
 TenRandomPos::~TenRandomPos() {}
 
-VectorXd TenRandomPos::get_random_pos() {
+VectorXd TenRandomPos::get_random_pos(float probability) {
     // 20% di probabilità di ritornare una posizione casuale.
-        if (dis(gen) < 0.2) {
+        if (dis(gen) < probability) {
             this->index = std::uniform_int_distribution<int>(0, 9)(gen);
             return random_pos[this->index];
         }
@@ -191,6 +191,8 @@ namespace gazebo
       // print in green color PLugin started
       cout << "\033[1;32m[Plugin] Plugin Update Box started\033[0m" << endl;
       last_update = std::chrono::steady_clock::now();
+      this->time = 0;
+      this->probability=0;
 
     }
 
@@ -234,10 +236,10 @@ namespace gazebo
       if (this->activate){        
         auto now = std::chrono::steady_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::seconds>(now - last_update).count();
-        if (duration >= 30) {
+        if (duration >= this->time) {
           // cout << duration << endl;
           last_update = now;
-          VectorXd pos = this->pos_generator.get_random_pos();
+          VectorXd pos = this->pos_generator.get_random_pos(this->probability);
           cout << "\033[1;33m[Plugin] Update Box position at : \033[0m\n" << pos.transpose() << endl;
           this->box_model->SetWorldPose(ignition::math::Pose3d(pos(0), pos(1), pos(2), pos(3), pos(4), pos(5)));
         }
@@ -259,8 +261,13 @@ namespace gazebo
     bool callbackServiceGetPosition(environment_pkg::BoxPos::Request &req, environment_pkg::BoxPos::Response &res)
     {
       
-      if (!req.request)
-        return false;
+      if (!req.request){
+        res.x_pos =0;
+        res.y_pos =0;
+        res.z_pos =0;
+        return true;
+
+      }
       res.x_pos = this->box_model->WorldPose().Pos().X();
       res.y_pos = this->box_model->WorldPose().Pos().Y();
       res.z_pos = this->box_model->WorldPose().Pos().Z();
@@ -273,8 +280,11 @@ namespace gazebo
 
     bool callbackServicePickUp(environment_pkg::BoxPickUp::Request &req, environment_pkg::BoxPickUp::Response &resp)
     {
-      if (!req.action)
+      if (!req.action){
         resp.success = false;
+        return true;
+      }
+
       ignition::math::Pose3d pose = this->box_model->WorldPose();
       //se la norma di pose lungo x e y è < di 1 allora posso prendere la scatola
       double distance = sqrt(pow(pose.Pos().X() - this->tiago_x_pos, 2) + pow(pose.Pos().Y() - this->tiago_y_pos, 2));
@@ -282,18 +292,16 @@ namespace gazebo
         cout << "\033[1;31m[Plugin] Box too far from Tiago\033[0m" << endl;
         // cout << distance << endl;
         resp.success = false;
-        return false;
+        return true;
       }
       this->T_box = T_tiago * T_tiago_box_up;
       VectorXd vec = HomogeneousMatrix_To_Vector(this->T_box);
       
       this->box_model->SetWorldPose(ignition::math::Pose3d(vec(0), vec(1), vec(2), vec(3), vec(4), vec(5)));
       
-
       cout << "\033[1;32m[Plugin] Box picked up\033[0m" << endl;
       resp.success = true;
       return true;
-
     }
 
     bool callbackServicePutDown(environment_pkg::BoxPutDown::Request &req, environment_pkg::BoxPutDown::Response &resp)
@@ -310,9 +318,17 @@ namespace gazebo
     {
       // this->box_model->SetWorldPose(ignition::math::Pose3d(req.x_pos, req.y_pos, req.z_pos, 0, 0, 0));
       if (req.activate)
-      cout << "\033[1;35m[Plugin] Update Box rdm pos activated: \033[0m\n"<< endl;
-      else (!req.activate)
+        cout << "\033[1;35m[Plugin] Update Box rdm pos activated: \033[0m\n"<< endl;
+      else 
         cout << "\033[1;35m[Plugin] Update Box rdm pos deactivated: \033[0m\n"<< endl;
+
+      if (req.time > 0)
+        this->time = req.time;
+        
+      if (req.probability < 0) {this->probability = 0; cout << "Probability must be between 0 and 1, clamped to 0" << endl;}
+      else if (req.probability >1) {this->probability = 1; cout << "Probability must be between 0 and 1, clamped to 1" << endl;}
+      else {this->probability = req.probability; cout << "Probability set to " << req.probability << endl;}
+     
 
       this->activate = req.activate;
       return true;
@@ -334,6 +350,8 @@ namespace gazebo
         float tiago_x_pos, tiago_y_pos, tiago_z_pos, tiago_rot_yaw;
         Eigen::Matrix4d T_tiago;
         Eigen::Matrix4d T_box, T_tiago_box_down, T_tiago_box_up;
+        int time; 
+        float probability;
         TenRandomPos pos_generator;
         std::chrono::steady_clock::time_point last_update;
   
