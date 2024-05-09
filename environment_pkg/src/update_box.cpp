@@ -185,7 +185,7 @@ namespace gazebo
   public:
     ModelPush() : ModelPlugin()
     {
-      T_tiago_box_down = Vector_To_HomogeneousMatrix(0.4, 0, 0.6, 0, 0, 0);
+      T_tiago_box_down = Vector_To_HomogeneousMatrix(0.8, 0, 0.6, 0, 0, 0);
       T_tiago_box_up = Vector_To_HomogeneousMatrix(-0.13, 0, 1.5, 0, 0, 0);
       sub_ground_truth = n.subscribe("/ground_truth_odom", 1, &ModelPush::callbackGroundTruth, this);
       // print in green color PLugin started
@@ -193,7 +193,6 @@ namespace gazebo
       last_update = std::chrono::steady_clock::now();
       this->time = 0;
       this->probability=0;
-
     }
 
 
@@ -300,12 +299,18 @@ namespace gazebo
       this->box_model->SetWorldPose(ignition::math::Pose3d(vec(0), vec(1), vec(2), vec(3), vec(4), vec(5)));
       
       cout << "\033[1;32m[Plugin] Box picked up\033[0m" << endl;
+      this->box_is_picked = true;
       resp.success = true;
       return true;
     }
 
     bool callbackServicePutDown(environment_pkg::BoxPutDown::Request &req, environment_pkg::BoxPutDown::Response &resp)
     {
+      if(this->box_is_picked == false){
+        cout << "\033[1;31m[Plugin] Box not picked up, cannot put down\033[0m" << endl;
+        resp.success = false;
+        return true;
+      }
       this->T_box = this->T_tiago * this->T_tiago_box_down;
       VectorXd vec = HomogeneousMatrix_To_Vector(this->T_box);
       cout << "\033[1;32m[Plugin] Box put down in pos x: " << vec(0) << " y: " << vec(1) << " z: " << vec(2) << "\033[0m" << endl;
@@ -346,6 +351,7 @@ namespace gazebo
 
     // Pointer to the update event connection
         event::ConnectionPtr updateConnection;
+        bool box_is_picked = false;
 
         float tiago_x_pos, tiago_y_pos, tiago_z_pos, tiago_rot_yaw;
         Eigen::Matrix4d T_tiago;
