@@ -57,7 +57,7 @@ namespace gazebo
           cout << "\033[1;32m[Plugin] " << this->model->GetName()<<  " has started: \033[0m"  << endl;
 
           service_update_door = n.advertiseService(service_name , &BoxUpdate::callbackUpdatePos, this);
-          service_door_status = n.advertiseService(service_status_name , &BoxUpdate::callbackDoorStatus, this);
+          // service_door_status = n.advertiseService(service_status_name , &BoxUpdate::callbackDoorStatus, this);
           
             ignition::math::Pose3d pose = this->model->WorldPose();
             this->initial_pos_x = pose.Pos().X();

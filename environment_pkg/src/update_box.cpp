@@ -54,7 +54,7 @@ TenRandomPos::TenRandomPos() : gen(std::random_device{}()), dis(0.0, 1.0) {
     random_pos[6] << -5, 7, 0.5, 0, 0, 0;
     random_pos[7] << -5, -5, 0.5, 0, 0, 0;
     random_pos[8] << -4, -6, 0.5, 0, 0, 0;
-    random_pos[9] << 11, -1, 0.5, 0, 0, 0;
+    random_pos[9] << 9, -1, 0.5, 0, 0, 0;
     
 }
 
@@ -287,7 +287,7 @@ namespace gazebo
       ignition::math::Pose3d pose = this->box_model->WorldPose();
       //se la norma di pose lungo x e y è < di 1 allora posso prendere la scatola
       double distance = sqrt(pow(pose.Pos().X() - this->tiago_x_pos, 2) + pow(pose.Pos().Y() - this->tiago_y_pos, 2));
-      if  (distance> 0.5){
+      if  (distance> 1.5){
         cout << "\033[1;31m[Plugin] Box too far from Tiago\033[0m" << endl;
         // cout << distance << endl;
         resp.success = false;
@@ -336,6 +336,7 @@ namespace gazebo
      
 
       this->activate = req.activate;
+      res.done = true;
       return true;
     }
 

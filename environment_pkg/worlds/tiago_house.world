@@ -133,7 +133,7 @@
           <script>
             <uri>file://media/materials/scripts/gazebo.material</uri>
             <!-- "<name>Gazebo/WoodPallet</name>" -->
-            <name>Gazebo/Red</name>
+            <name>Gazebo/Blue</name>
           </script>
         </material>
       </visual>
@@ -227,7 +227,7 @@
           <script>
             <uri>file://media/materials/scripts/gazebo.material</uri>
             <!-- "<name>Gazebo/WoodPallet</name>" -->
-            <name>Gazebo/Red</name>
+            <name>Gazebo/Black</name>
           </script>
         </material>
       </visual>
