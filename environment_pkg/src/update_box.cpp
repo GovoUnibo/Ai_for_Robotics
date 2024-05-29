@@ -336,7 +336,7 @@ namespace gazebo
      
 
       this->activate = req.activate;
-      res.done = true;
+      resp.done = true;
       return true;
     }
 
